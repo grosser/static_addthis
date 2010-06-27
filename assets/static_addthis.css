@@ -1,0 +1,15 @@
+.addthis_icon{
+  background: url(/images/addthis_sprite.png) no-repeat;
+  width: 16px;
+  height: 15px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.addthis_separator{
+  margin-left: 3px;
+}
+
+.addthis_toolbox .addthis_icon {
+  margin-left: 3px;
+}
