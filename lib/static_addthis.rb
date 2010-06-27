@@ -1,5 +1,20 @@
+require 'cgi'
+
 module StaticAddthis
+  class << self
+    attr_accessor :defaults
+  end
+  self.defaults = {
+    :providers => %w[Facebook Twitter | more],
+    :title => 'Add :title',
+    :url => 'Add :url',
+    :username => 'Add :username',
+    :uid => 'Add :uid'
+  }
+
   def self.icons(options)
+    options = defaults.merge(options)
+
     url = CGI.escape(options[:url])
     title = CGI.escape(options[:title])
     username = options[:username]
@@ -16,17 +31,17 @@ module StaticAddthis
         text = social_icon('addthis', :title => '+')
         link_to text, href, :rel => :nofollow
       else
-        text = provider.humanize
-        href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{provider}&amp;url=#{url_with_tracking}&amp;title=#{title}&amp;content=&amp;lng=#{I18n.locale}&amp;uid=#{uid}"
+        text = provider.capitalize
+        href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{provider}&amp;url=#{url_with_tracking}&amp;title=#{title}&amp;content=&amp;uid=#{uid}"
         text = (options[:only_text] ? text : "#{social_icon(provider)}#{text}")
-        link_to text, href, :target => :blank, :rel => :nofollow
+        link_to text, href, :target => :blank, :rel => :nofollow 
       end
     end
 
     <<-HTML
       <div class="addthis_toolbox">
         #{providers}
-        #{clearer}
+        <div style="clear:both"></div>
       </div>
     HTML
   end
@@ -37,14 +52,26 @@ module StaticAddthis
       'twitter' => 3217,
       'edelight' => 3584,
       'delicious' => 144,
-      'misterwong_de' => 1136,
+      'misterwongde' => 1136,
       'google' => 1344,
       'stylehive' => 4192,
       'addthis' => 0
     }
-    offset = providers[provider.to_s.underscore]
+    offset = providers[provider.to_s.downcase]
     return '' unless offset
-    title = provider.to_s.titleize
-    content_tag :span, '&nbsp;', options.reverse_merge(:class => 'addthis_icon', :style => "background-position: 0 #{-1*offset}px", :title => title)
+    title = provider.to_s.capitalize
+    options = {:class => 'addthis_icon', :style => "background-position: 0 #{-1*offset}px", :title => title}.merge(options)
+    content_tag :span, '&nbsp;', options
+  end
+
+  private
+
+  def self.link_to(name, href, options={})
+    content_tag :a, name, options.merge(:href => href)
+  end
+
+  def self.content_tag(name, content, options={})
+    options = options.map{|k,v| %{#{k}="#{v.to_s.gsub('"','`')}"}} * ' '
+    "<#{name} #{options}>#{content}</#{name}>"
   end
 end
