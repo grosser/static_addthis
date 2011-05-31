@@ -28,7 +28,7 @@ task :refresh_icons do
   icons = css_rules.map do |klass, css|
     puts klass+css
     next unless klass+css =~ /^#{icon_set}_([_a-z]+)background-position:0 -(\d+)px/
-    [$1, $2]
+    [$1, $2.to_i]
   end.compact.sort
   icons = Hash[icons]
 
