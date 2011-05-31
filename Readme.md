@@ -7,10 +7,10 @@ Faster page load time:
 
 Install
 =======
-    script/plugin install git://github.com/grosser/static_addthis.git
+    rails plugin install git://github.com/grosser/static_addthis.git
 
-Copy css from assets/static_addthis.css  
-Copy assets/addthis_sprite.jpg into public/images
+ - copy css from assets/static_addthis.css (0.2kb) to public and include it
+ - copy assets/addthis_sprite.png into public/images
 
 Usage
 =====
@@ -29,6 +29,6 @@ TODO
 
 Author
 ======
-[Michael Grosser](http://pragmatig.wordpress.com)  
-grosser.michael@gmail.com  
-Hereby placed under public domain, do what you want, just do not hold me accountable...
+[Michael Grosser](http://grosser.it)<br/>
+michael@grosser.it<br/>
+Hereby placed under public domain, do what you want, just do not hold me accountable...<br/>
