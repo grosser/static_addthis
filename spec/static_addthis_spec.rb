@@ -31,7 +31,7 @@ describe StaticAddthis do
 
   describe :social_icon do
     it "finds correct offset" do
-      StaticAddthis.social_icon('Twitter').should include('background-position: 0 -3217px')
+      StaticAddthis.social_icon('Twitter').should include('background-position: 0 -5232px')
     end
   end
 end
