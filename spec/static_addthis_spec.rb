@@ -36,6 +36,13 @@ describe StaticAddthis do
       result = StaticAddthis.icons(defaults.merge(:providers => ['Twitter'], :text => "Share on %{provider}"))
       result.should include('Share on Twitter')
     end
+
+    it "supports :inline" do
+      result = StaticAddthis.icons(defaults.merge(:providers => ['Twitter'], :inline => true))
+      result.should_not include('clear')
+      result.should_not include('<div')
+      result.should include('addthis_toolbox')
+    end
   end
 
   describe :social_icon do

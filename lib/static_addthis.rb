@@ -6,12 +6,16 @@ module StaticAddthis
   def self.icons(options)
     providers = options[:providers].map{|p| link_to_provider(p, options) }
 
-    <<-HTML
-      <div class="addthis_toolbox">
-        #{providers}
-        <div style="clear:both"></div>
-      </div>
-    HTML
+    if options[:inline]
+      content_tag :span, providers.to_s, :class => "addthis_toolbox"
+    else
+      <<-HTML
+        <div class="addthis_toolbox">
+          #{providers}
+          <div style="clear:both"></div>
+        </div>
+      HTML
+    end
   end
 
   def self.social_icon(provider, options={})
