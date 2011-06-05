@@ -18,10 +18,14 @@ module StaticAddthis
         text = social_icon('more', :title => '+')
         link_to text, href, :rel => :nofollow
       else
-        text = provider.capitalize
-        href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{provider}&amp;url=#{url}&amp;title=#{title}&amp;content=&amp;uid=#{uid}"
-        text = (options[:only_text] ? text : "#{social_icon(provider)}#{text}")
-        link_to text, href, :target => :blank, :rel => :nofollow
+        if known_provider?(provider)
+          text = provider.capitalize
+          href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{provider}&amp;url=#{url}&amp;title=#{title}&amp;content=&amp;uid=#{uid}"
+          text = (options[:only_text] ? text : "#{social_icon(provider)}#{text}")
+          link_to text, href, :target => :blank, :rel => :nofollow
+        else
+          provider
+        end
       end
     end
 
@@ -34,14 +38,21 @@ module StaticAddthis
   end
 
   def self.social_icon(provider, options={})
-    offset = ICON_OFFSETS[provider.to_s.downcase]
-    return '' unless offset
+    return '' unless offset = icon_offset(provider)
     title = provider.to_s.capitalize
     options = {:class => 'addthis_icon', :style => "background-position: 0 #{-1*offset}px", :title => title}.merge(options)
     content_tag :span, '&nbsp;', options
   end
 
   private
+
+  def self.icon_offset(provider)
+    ICON_OFFSETS[provider.to_s.downcase]
+  end
+
+  def self.known_provider?(provider)
+    !!icon_offset(provider)
+  end
 
   def self.link_to(name, href, options={})
     content_tag :a, name, options.merge(:href => href)

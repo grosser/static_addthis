@@ -16,6 +16,12 @@ describe StaticAddthis do
     it "produces a provider" do
       StaticAddthis.icons(defaults.merge(:providers => ['Twitter'])).should include(">Twitter<")
     end
+
+    it "ignores unknown providers so i can gsub them" do
+      result = StaticAddthis.icons(defaults.merge(:providers => ['Foo']))
+      result.should_not include(">Foo<")
+      result.should include("Foo\n")
+    end
   end
 
   describe :social_icon do

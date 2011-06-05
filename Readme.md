@@ -28,6 +28,9 @@ Usage
     # in view
     <%= add_this :providers => ['Facebook', 'Twitter', '|', 'more'] %>
 
+    # customize: add a unknown provider and use .sub
+    <%= add_this(:providers => ['Twitter', 'MyStuff', 'more']).sub('MyStuff', link_to('MyStuff', '/my_stuff')) %>
+
 Author
 ======
 [Michael Grosser](http://grosser.it)<br/>
