@@ -1,9 +1,9 @@
-Faster page load time:
+Advantages:
 
- - no additional js/css files
- - no js execution time
- - no flash tracking pixel from addthis
- - no backlinks to addthis (SEO)
+ - Pagespeed: no additional js/css files + no js execution time
+ - Security: no flash tracking pixel from addthis
+ - Offline access: everything working without an internet connection
+ - SEO: no backlinks to addthis
 
 Install
 =======
@@ -14,18 +14,19 @@ Install
 
 Usage
 =====
-    # setup (e.g. config/environment.rb)
-    StaticAddthis.defaults = {
-      :username => 'myaddthisusername',
-      :uid => '12345'
-    }
+
+    # app/helpers/application_helper.rb
+    def add_this(options)
+      StaticAddthis.icons(options.reverse_merge(
+        :title => @page_title,
+        :url => request.request_uri,
+        :username => 'myaddthisusername',
+        :uid => '12345'
+      ))
+    end
 
     # in view
-    <%= StaticAddthis.icons :providers => ['Facebook', 'Twitter', '|', 'more'], :url => request.request_uri, :title => 'My website' %>
-
-TODO
-=====
- - add more providers <-> open image and lookup provider positions
+    <%= add_this :providers => ['Facebook', 'Twitter', '|', 'more'] %>
 
 Author
 ======
