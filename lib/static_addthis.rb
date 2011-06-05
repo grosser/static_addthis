@@ -21,31 +21,34 @@ module StaticAddthis
     content_tag :span, '&nbsp;', options
   end
 
-  def self.link_to_provider(name, options)
+  def self.link_to_provider(provider, options)
+    provider = provider.to_s
+
     url = options[:url] || raise('addthis needs :url')
-    url = CGI.escape(url.gsub('%{provider}', name))
+    url = CGI.escape(url.gsub('%{provider}', provider))
+
     title = CGI.escape(options[:title] || raise('addthis needs :title'))
     username = options[:username] || raise('addthis needs :username')
     uid = options[:uid] || raise('addthis needs :uid')
 
-    case name.to_s
+    case provider
     when '|' then
       %{<span class="addthis_separator">|</span>}
     when 'more'
       href = "http://www.addthis.com/bookmark.php?v=250&amp;username=#{username}"
-      text = '+'
+      text = (options[:text] || options[:more_text] || '+').gsub('%{provider}', provider)
       icon = social_icon('more', :title => text)
       text = (options[:only_text] ? text : "#{icon}#{text}")
       link_to text, href, :target => :blank, :rel => :nofollow
     else
-      if known_provider?(name)
-        text = name.capitalize
-        href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{name}&amp;url=#{url}&amp;title=#{title}&amp;content=&amp;uid=#{uid}"
-        icon = social_icon(name, :title => text)
+      if known_provider?(provider)
+        text = (options[:text] || provider.capitalize).gsub('%{provider}', provider)
+        href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{provider}&amp;url=#{url}&amp;title=#{title}&amp;content=&amp;uid=#{uid}"
+        icon = social_icon(provider, :title => text)
         text = (options[:only_text] ? text : "#{icon}#{text}")
         link_to text, href, :target => :blank, :rel => :nofollow
       else
-        name
+        provider
       end
     end
   end

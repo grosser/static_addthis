@@ -31,6 +31,11 @@ describe StaticAddthis do
       result = StaticAddthis.icons(defaults.merge(:providers => ['Twitter','more'], :only_text => true))
       result.should_not include(%{class="addthis_icon"})
     end
+
+    it "supports custom translations" do
+      result = StaticAddthis.icons(defaults.merge(:providers => ['Twitter'], :text => "Share on %{provider}"))
+      result.should include('Share on Twitter')
+    end
   end
 
   describe :social_icon do

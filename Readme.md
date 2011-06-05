@@ -39,6 +39,9 @@ Usage
     # without icons
     <%= add_this :providers => ['more'], :only_text => true %>
 
+    # without custom translations
+    <%= add_this :providers => ['Facebook', 'Twitter'], :text => "Share on %{provider}" %>
+
     # just need some icons ?
     <%= StaticAddthis.social_icon('Facebook') %>
 
