@@ -26,6 +26,11 @@ describe StaticAddthis do
       result.should_not include(">Foo<")
       result.should include("Foo\n")
     end
+
+    it "does not show icons with only_text option" do
+      result = StaticAddthis.icons(defaults.merge(:providers => ['Twitter','more'], :only_text => true))
+      result.should_not include(%{class="addthis_icon"})
+    end
   end
 
   describe :social_icon do

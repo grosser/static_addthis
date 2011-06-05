@@ -36,8 +36,12 @@ Usage
     # customize: add a unknown provider and use .sub
     <%= add_this(:providers => ['Twitter', 'MyStuff', 'more']).sub('MyStuff', link_to('MyStuff', '/my_stuff')) %>
 
+    # without icons
+    <%= add_this :providers => ['more'], :only_text => true %>
+
     # just need some icons ?
     <%= StaticAddthis.social_icon('Facebook') %>
+
 
 Author
 ======

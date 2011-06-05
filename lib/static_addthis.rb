@@ -33,13 +33,16 @@ module StaticAddthis
       %{<span class="addthis_separator">|</span>}
     when 'more'
       href = "http://www.addthis.com/bookmark.php?v=250&amp;username=#{username}"
-      text = social_icon('more', :title => '+')
+      text = '+'
+      icon = social_icon('more', :title => text)
+      text = (options[:only_text] ? text : "#{icon}#{text}")
       link_to text, href, :target => :blank, :rel => :nofollow
     else
       if known_provider?(name)
         text = name.capitalize
         href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{name}&amp;url=#{url}&amp;title=#{title}&amp;content=&amp;uid=#{uid}"
-        text = (options[:only_text] ? text : "#{social_icon(name)}#{text}")
+        icon = social_icon(name, :title => text)
+        text = (options[:only_text] ? text : "#{icon}#{text}")
         link_to text, href, :target => :blank, :rel => :nofollow
       else
         name
