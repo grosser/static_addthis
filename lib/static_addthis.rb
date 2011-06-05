@@ -16,8 +16,8 @@ module StaticAddthis
 
   def self.social_icon(provider, options={})
     return '' unless offset = icon_offset(provider)
-    title = provider.to_s.capitalize
-    options = {:class => 'addthis_icon', :style => "background-position: 0 #{-1*offset}px", :title => title}.merge(options)
+    options = {:class => 'addthis_icon', :style => "background-position: 0 #{-1*offset}px"}.merge(options)
+    options[:title] ||= provider.to_s.capitalize
     content_tag :span, '&nbsp;', options
   end
 
@@ -36,17 +36,13 @@ module StaticAddthis
       %{<span class="addthis_separator">|</span>}
     when 'more'
       href = "http://www.addthis.com/bookmark.php?v=250&amp;username=#{username}"
-      text = (options[:text] || options[:more_text] || '+').gsub('%{provider}', provider)
-      icon = social_icon('more', :title => text)
-      text = (options[:only_text] ? text : "#{icon}#{text}")
-      link_to text, href, :target => :blank, :rel => :nofollow
+      text = (options[:more_text] || options[:text] || '+')
+      build_link provider, text, href, options
     else
       if known_provider?(provider)
-        text = (options[:text] || provider.capitalize).gsub('%{provider}', provider)
         href = "//www.addthis.com/bookmark.php?pub=#{username}&amp;v=250&amp;source=tbx-250&amp;tt=0&amp;s=#{provider}&amp;url=#{url}&amp;title=#{title}&amp;content=&amp;uid=#{uid}"
-        icon = social_icon(provider, :title => text)
-        text = (options[:only_text] ? text : "#{icon}#{text}")
-        link_to text, href, :target => :blank, :rel => :nofollow
+        text = (options[:text] || provider.capitalize)
+        build_link provider, text, href, options
       else
         provider
       end
@@ -54,6 +50,20 @@ module StaticAddthis
   end
 
   private
+
+  def self.build_link(provider, text, href, options)
+    text = text.gsub('%{provider}', provider)
+    icon = social_icon(provider, :title => text)
+
+    text = if options[:only_text]
+      text
+    elsif options[:show_text]
+      "#{icon}#{text}"
+    else
+      icon
+    end
+    link_to text, href, :target => :blank, :rel => :nofollow
+  end
 
   def self.icon_offset(provider)
     ICON_OFFSETS[provider.to_s.downcase]

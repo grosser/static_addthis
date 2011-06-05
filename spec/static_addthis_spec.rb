@@ -14,14 +14,14 @@ describe StaticAddthis do
     end
 
     it "produces a provider" do
-      StaticAddthis.icons(defaults.merge(:providers => ['Twitter'])).should include(">Twitter<")
+      StaticAddthis.icons(defaults.merge(:providers => ['Twitter'], :show_text => true)).should include(">Twitter<")
     end
 
     it "overwrites %{provider} in url" do
       StaticAddthis.icons(defaults.merge(:providers => ['Twitter'], :url => 'xxx%{provider}yyy')).should include("xxxTwitteryyy")
     end
 
-    it "ignores unknown providers so i can gsub them" do
+    it "ignores unknown providers so I can gsub them" do
       result = StaticAddthis.icons(defaults.merge(:providers => ['Foo']))
       result.should_not include(">Foo<")
       result.should include("Foo\n")

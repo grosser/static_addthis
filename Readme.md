@@ -33,14 +33,14 @@ Usage
     # in view
     <%= add_this :providers => ['Facebook', 'Twitter', '|', 'more'] %>
 
-    # customize: add a unknown provider and use .sub
+    # adding a custom provider
     <%= add_this(:providers => ['Twitter', 'MyStuff', 'more']).sub('MyStuff', link_to('MyStuff', '/my_stuff')) %>
 
     # without icons
     <%= add_this :providers => ['more'], :only_text => true %>
 
-    # without custom translations
-    <%= add_this :providers => ['Facebook', 'Twitter'], :text => "Share on %{provider}" %>
+    # custom translations
+    <%= add_this :providers => ['Facebook', 'Twitter', 'more'], :text => "Share on %{provider}", :show_text => true, :more_text => 'All...' %>
 
     # just need some icons ?
     <%= StaticAddthis.social_icon('Facebook') %>
