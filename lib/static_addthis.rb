@@ -34,7 +34,7 @@ module StaticAddthis
     when 'more'
       href = "http://www.addthis.com/bookmark.php?v=250&amp;username=#{username}"
       text = social_icon('more', :title => '+')
-      link_to text, href, :rel => :nofollow
+      link_to text, href, :target => :blank, :rel => :nofollow
     else
       if known_provider?(name)
         text = name.capitalize
