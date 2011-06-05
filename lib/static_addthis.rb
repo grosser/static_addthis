@@ -61,7 +61,7 @@ module StaticAddthis
 
     text = if options[:only_text]
       text
-    elsif options[:show_text]
+    elsif options[:show_text] or (options[:show_more_text] and provider == 'more')
       "#{icon}#{text}"
     else
       icon
