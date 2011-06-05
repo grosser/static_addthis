@@ -22,7 +22,8 @@ module StaticAddthis
   end
 
   def self.link_to_provider(name, options)
-    url = CGI.escape(options[:url] || raise('addthis needs :url'))
+    url = options[:url] || raise('addthis needs :url')
+    url = CGI.escape(url.gsub('%{provider}', name))
     title = CGI.escape(options[:title] || raise('addthis needs :title'))
     username = options[:username] || raise('addthis needs :username')
     uid = options[:uid] || raise('addthis needs :uid')

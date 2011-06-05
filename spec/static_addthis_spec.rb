@@ -17,6 +17,10 @@ describe StaticAddthis do
       StaticAddthis.icons(defaults.merge(:providers => ['Twitter'])).should include(">Twitter<")
     end
 
+    it "overwrites %{provider} in url" do
+      StaticAddthis.icons(defaults.merge(:providers => ['Twitter'], :url => 'xxx%{provider}yyy')).should include("xxxTwitteryyy")
+    end
+
     it "ignores unknown providers so i can gsub them" do
       result = StaticAddthis.icons(defaults.merge(:providers => ['Foo']))
       result.should_not include(">Foo<")
