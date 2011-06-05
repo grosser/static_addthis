@@ -66,7 +66,8 @@ module StaticAddthis
     else
       icon
     end
-    link_to text, href, :target => :blank, :rel => :nofollow
+
+    link_to text, href, :target => :blank, :rel => :nofollow, :id => "add_this_#{provider}"
   end
 
   def self.icon_offset(provider)
