@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
     "assets/addthis_sprite.png",
     "assets/static_addthis.css",
     "lib/static_addthis.rb",
-    "spec/static_addthis_spec.rb"
+    "spec/static_addthis_spec.rb",
+    "static_addthis.gemspec"
   ]
   s.homepage = %q{http://github.com/grosser/static_addthis}
   s.require_paths = ["lib"]
