@@ -35,3 +35,18 @@ task :refresh_icons do
   puts icons.inspect
   puts "now paste this into lib/static_addthis.rb"
 end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gem|
+    gem.name = 'static_addthis'
+    gem.summary = "Fast Addthis: no external js/css/images +  no backlinks to addthis"
+    gem.email = "michael@grosser.it"
+    gem.homepage = "http://github.com/grosser/#{gem.name}"
+    gem.authors = ["Michael Grosser"]
+  end
+
+  Jeweler::GemcutterTasks.new
+rescue LoadError
+  puts "Jeweler, or one of its dependencies, is not available. Install it with: gem install jeweler"
+end
